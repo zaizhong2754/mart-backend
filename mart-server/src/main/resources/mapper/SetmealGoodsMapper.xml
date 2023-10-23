@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mart.mapper.SetmealGoodsMapper">
+    <select id="getSetmealIdsByGoodsIds" resultType="java.lang.Long">
+        select setmeal_id from setmeal_goods where goods_id in
+        <foreach collection="goodsIds" item="goodsId" separator="," open="(" close=")">
+            #{goodsId}
+        </foreach>
+    </select>
+    <insert id="insertBatch" parameterType="list">
+        insert into setmeal_goods
+        (setmeal_id,goods_id,name,price,copies)
+        values
+        <foreach collection="setmealGoodses" item="sg" separator=",">
+            (#{sg.setmealId},#{sg.goodsId},#{sg.name},#{sg.price},#{sg.copies})
+        </foreach>
+    </insert>
+</mapper>

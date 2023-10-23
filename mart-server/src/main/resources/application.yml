@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${mart.datasource.driver-class-name}
+      url: jdbc:mysql://${mart.datasource.host}:${mart.datasource.port}/${mart.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${mart.datasource.username}
+      password: ${mart.datasource.password}
+  alioss:
+    endpoint: ${mart.alioss.endpoint}
+    access-key-id: ${mart.alioss.access-key-id}
+    access-key-secret: ${mart.alioss.access-key-secret}
+    bucket-name: ${mart.alioss.bucket-name}
+  redis:
+    host: ${mart.redis.host}
+    port: ${mart.redis.port}
+    password: ${mart.redis.password}
+    database: ${mart.redis.database}
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.mart.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      mart:
+        mapper: debug
+        service: info
+        controller: info
+
+mart:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: mart
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
